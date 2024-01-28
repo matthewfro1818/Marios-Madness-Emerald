@@ -5,7 +5,8 @@ class PublicVariables
   public static var luigiChars:Array<String> = [
     'luigi_fountain3d', 'luigi_fountain', 'luigi-toolate'
   ,'luigi-prequel', 'luigi-ldo', 'luigi-ihy-new2'
-  ,'luigi-fake', 'luigireal', 'luigiquemao'];
+  ,'luigi-fake', 'luigireal', 'luigiquemao'
+  ,'beta', 'betanew'];
 
   public static var downt:Array<String> = [
     'Hurt Note', 'Nota veneno', 'Nota boo'
