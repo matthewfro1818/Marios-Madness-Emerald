@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="danny.png">
+<SubTexture name="danny down0000" x="957" y="652" width="390" height="557" frameX="-220" frameY="-102" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny down0001" x="620" y="1229" width="391" height="556" frameX="-205" frameY="-103" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny down0002" x="428" y="1786" width="463" height="541" frameX="-148" frameY="-118" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny down0003" x="2217" y="0" width="406" height="548" frameX="-178" frameY="-111" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny idle0000" x="2217" y="548" width="356" height="545" frameX="-233" frameY="-114" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny idle0001" x="1703" y="1229" width="331" height="550" frameX="-248" frameY="-109" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny idle0002" x="1011" y="1229" width="304" height="555" frameX="-265" frameY="-104" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny idle0003" x="1916" y="572" width="291" height="559" frameX="-265" frameY="-100" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny left0000" x="0" y="1229" width="277" height="557" frameX="-242" frameY="-102" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny left0001" x="277" y="1229" width="343" height="557" frameX="-200" frameY="-102" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny left0002" x="0" y="1786" width="428" height="547" frameX="-148" frameY="-112" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny left0003" x="1315" y="1229" width="388" height="555" frameX="-171" frameY="-104" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny right0000" x="1583" y="572" width="333" height="563" frameX="-263" frameY="-96" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny right0001" x="0" y="652" width="429" height="577" frameX="-246" frameY="-82" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny right0002" x="1583" y="0" width="634" height="572" frameX="-159" frameY="-87" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny right0003" x="429" y="652" width="528" height="576" frameX="-209" frameY="-83" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny up0000" x="1232" y="0" width="351" height="601" frameX="-227" frameY="-58" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny up0001" x="839" y="0" width="393" height="624" frameX="-224" frameY="-35" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny up0002" x="0" y="0" width="426" height="652" frameX="-214" frameY="-7" frameWidth="875" frameHeight="763" />
+<SubTexture name="danny up0003" x="426" y="0" width="413" height="638" frameX="-215" frameY="-21" frameWidth="875" frameHeight="763" />
+</TextureAtlas>
