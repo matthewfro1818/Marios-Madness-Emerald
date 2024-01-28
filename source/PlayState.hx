@@ -6804,10 +6804,10 @@ class PlayState extends MusicBeatState
 						swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; // Backward compatibility + compatibility with Week 7 charts
 					swagNote.scrollFactor.set();
 
-					if (RandomVariables.luigiChars.contains(SONG.player2) && !gottaHitNote && !isPixelStage)
+					if (PublicVariables.luigiChars.contains(SONG.player2) && !gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType))
 						swagNote.texture = "Luigi_NOTE_assets";
 
-					if (RandomVariables.luigiChars.contains(SONG.player1) && gottaHitNote && !isPixelStage)
+					if (PublicVariables.luigiChars.contains(SONG.player1) && gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType))
 						swagNote.texture = "Luigi_NOTE_assets";
 
 					var susLength:Float = swagNote.sustainLength;
@@ -6829,10 +6829,10 @@ class PlayState extends MusicBeatState
 							sustainNote.noteType = swagNote.noteType;
 							sustainNote.scrollFactor.set();
 
-							if (RandomVariables.luigiChars.contains(SONG.player2) && !gottaHitNote && !isPixelStage)
+							if (PublicVariables.luigiChars.contains(SONG.player2) && !gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(sustainNote.noteType))
 								sustainNote.texture = "Luigi_NOTE_assets";
 
-							if (RandomVariables.luigiChars.contains(SONG.player1) && gottaHitNote && !isPixelStage)
+							if (PublicVariables.luigiChars.contains(SONG.player1) && gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(sustainNote.noteType))
 								sustainNote.texture = "Luigi_NOTE_assets";
 
 							unspawnNotes.push(sustainNote);
@@ -15959,7 +15959,7 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					if (RandomVariables.luigiChars.contains(SONG.player1)){
+					if (PublicVariables.luigiChars.contains(SONG.player1)){
 						luigiSpawnNoteSplash(strum.x, strum.y, note.noteData, note);
 					}else{
 						spawnNoteSplash(strum.x, strum.y, note.noteData, note);
@@ -15982,7 +15982,7 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					if (RandomVariables.luigiChars.contains(SONG.player2)){
+					if (PublicVariables.luigiChars.contains(SONG.player2)){
 						luigiSpawnNoteSplash(strum.x, strum.y, note.noteData, note);
 					}else{
 						spawnNoteSplash(strum.x, strum.y, note.noteData, note);

@@ -121,9 +121,9 @@ class StrumNote extends FlxSprite
 	}
 
 	public function updateNoteSkin(skin:String){
-		if (RandomVariables.luigiChars.contains(PlayState.SONG.player2) && player == 0){
+		if (PublicVariables.luigiChars.contains(PlayState.SONG.player2) && player == 0){
 			this.frames = Paths.getSparrowAtlas('Luigi_NOTE_assets');
-		}else if (RandomVariables.luigiChars.contains(PlayState.SONG.player1) && player == 1){
+		}else if (PublicVariables.luigiChars.contains(PlayState.SONG.player1) && player == 1){
 			this.frames = Paths.getSparrowAtlas('Luigi_NOTE_assets');
 		}else{
 			this.frames = Paths.getSparrowAtlas(skin);	
