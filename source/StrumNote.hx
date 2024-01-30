@@ -132,12 +132,7 @@ class StrumNote extends FlxSprite
 			}else if (player == 0){
 				this.frames = Paths.getSparrowAtlas('Mario_NOTE_assets');	
 			}
-		}/*else if (PublicVariables.colorChars.contains(PlayState.SONG.player2) && player == 0){
-			this.frames = Paths.getSparrowAtlas('Color_NOTE_assets');
-			if (PublicVariables.colorChars.contains('secretmario')){
-				this.color = FlxColor.RED;
-			}
-		}*/else{
+		}else{
 			this.frames = Paths.getSparrowAtlas(skin);	
 		}
 		this.animation.addByPrefix('green', 'arrowUP');

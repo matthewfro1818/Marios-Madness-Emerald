@@ -12,11 +12,6 @@ class PublicVariables
   ,'beta', 'betanew'
   ];
 
-  /*public static var colorChars:Array<String> = [ // auto color noteskin characters
-  'secretmario','secretmario-dialogue'
-  ];*/
-
-
   public static var downt:Array<String> = [ // dont overwrite the note types texture if the opponent has a custom note skins
     'Hurt Note', 'Nota veneno', 'Nota boo'
   ,'Coin Note', 'Water Note', 'Nota bomba'

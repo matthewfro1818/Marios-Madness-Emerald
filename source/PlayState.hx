@@ -6812,13 +6812,6 @@ class PlayState extends MusicBeatState
 					if (PublicVariables.luigiChars.contains(SONG.player1) && gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType))
 						swagNote.texture = "Luigi_NOTE_assets";
 
-					/*if (PublicVariables.colorChars.contains(SONG.player2) && !gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType))
-						swagNote.texture = "Color_NOTE_assets";
-
-					if (PublicVariables.colorChars.contains('secretmario') && !gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType)){
-						swagNote.color = FlxColor.RED;
-					}*/
-
 					if(swagNote.botplaySkin && PublicVariables.luigiDayOutNoteChange == true 
 						&& !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType)){
 						if (gottaHitNote){
