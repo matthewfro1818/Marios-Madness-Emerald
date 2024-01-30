@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxPoint;
 import math.*;
+import flixel.util.FlxColor;
 
 using StringTools;
 
@@ -131,7 +132,12 @@ class StrumNote extends FlxSprite
 			}else if (player == 0){
 				this.frames = Paths.getSparrowAtlas('Mario_NOTE_assets');	
 			}
-		}else{
+		}/*else if (PublicVariables.colorChars.contains(PlayState.SONG.player2) && player == 0){
+			this.frames = Paths.getSparrowAtlas('Color_NOTE_assets');
+			if (PublicVariables.colorChars.contains('secretmario')){
+				this.color = FlxColor.RED;
+			}
+		}*/else{
 			this.frames = Paths.getSparrowAtlas(skin);	
 		}
 		this.animation.addByPrefix('green', 'arrowUP');

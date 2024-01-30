@@ -5342,7 +5342,7 @@ class PlayState extends MusicBeatState
 		luigiLogo.updateHitbox();
 		luigiLogo.screenCenter(X);
 		// luigiLogo.x += 10;
-		luigiLogo.y = ((!hasDownScroll ? 550 : -90));
+		luigiLogo.y = ((!hasDownScroll ? 550 : 120));
 		luigiLogo.visible = cpuControlled;
 		add(luigiLogo);
 		if (curStage == 'virtual' || curStage == 'landstage' || curStage == 'somari'){
@@ -6812,6 +6812,13 @@ class PlayState extends MusicBeatState
 					if (PublicVariables.luigiChars.contains(SONG.player1) && gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType))
 						swagNote.texture = "Luigi_NOTE_assets";
 
+					/*if (PublicVariables.colorChars.contains(SONG.player2) && !gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType))
+						swagNote.texture = "Color_NOTE_assets";
+
+					if (PublicVariables.colorChars.contains('secretmario') && !gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType)){
+						swagNote.color = FlxColor.RED;
+					}*/
+
 					if(swagNote.botplaySkin && PublicVariables.luigiDayOutNoteChange == true 
 						&& !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType)){
 						if (gottaHitNote){
@@ -6845,6 +6852,13 @@ class PlayState extends MusicBeatState
 
 							if (PublicVariables.luigiChars.contains(SONG.player1) && gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(sustainNote.noteType))
 								sustainNote.texture = "Luigi_NOTE_assets";
+
+							/*if (PublicVariables.colorChars.contains(SONG.player2) && !gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(sustainNote.noteType))
+								sustainNote.texture = "Color_NOTE_assets";
+
+							if (PublicVariables.colorChars.contains('secretmario') && !gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(sustainNote.noteType)){
+								sustainNote.color = FlxColor.RED;
+							}*/
 
 							if(sustainNote.botplaySkin && PublicVariables.luigiDayOutNoteChange == true 
 								&& !isPixelStage && !PublicVariables.downt.contains(sustainNote.noteType)){
@@ -8858,8 +8872,8 @@ class PlayState extends MusicBeatState
 						//}
 					}
 
-					if (!daNote.isSustainNote && !PublicVariables.noNoteSplasheSongs.contains(PlayState.SONG.song)){
-						spawnNoteSplashOnNote2(daNote);
+					if (!daNote.isSustainNote){
+						spawnNoteSplashOnNote2(daNote, PublicVariables.noNoteSplasheSongs.contains(PlayState.SONG.song));
 					}
 
 					callOnLuas('opponentNoteHit', [
@@ -14956,9 +14970,9 @@ class PlayState extends MusicBeatState
 	}
 
 	public var ratingIndexArray:Array<String> = ["sick", "good", "bad", "shit"];
-	public var returnArray:Array<String> = ["SFC", "GFC", "FC", "FC"];
+	public var returnArray:Array<String> = ["MFC", "SFC", "GFC", "FC"];
 	public var ratingIndexArray2:Array<String> = ["sick", "good", "bad", "shit"];
-	public var returnArray2:Array<String> = ["AAAA", "AAA", "AA", "A", "B", "C", "F"];
+	public var returnArray2:Array<String> = ["sick", "good", "bad", "shit"];
 	public var smallestRating:String;
 
 	private function popUpScore(note:Note = null):Void
@@ -15864,20 +15878,22 @@ class PlayState extends MusicBeatState
 					{
 						iconP1.changeIcon(gf.healthIcon);
 						reloadHealthBarColors();
-						if (PublicVariables.luigiDayOutNoteChange == false){
-							PublicVariables.luigiDayOutNoteChange = true;
-							for(note in playerStrums.members){
-								note.updateNoteSkin('Luigi_NOTE_assets');
-							}
-							notes.forEachAlive(function(note:Note){
-								if(note.botplaySkin){
-									if (note.mustPress){
-										note.reloadNote('', 'Luigi_NOTE_assets');
-									}else{
-										note.reloadNote('', 'Mario_NOTE_assets');
-									}
+						if (cpuControlled == false){
+							if (PublicVariables.luigiDayOutNoteChange == false){
+								PublicVariables.luigiDayOutNoteChange = true;
+								for(note in playerStrums.members){
+									note.updateNoteSkin('Luigi_NOTE_assets');
 								}
-							});
+								notes.forEachAlive(function(note:Note){
+									if(note.botplaySkin){
+										if (note.mustPress){
+											note.reloadNote('', 'Luigi_NOTE_assets');
+										}else{
+											note.reloadNote('', 'Mario_NOTE_assets');
+										}
+									}
+								});
+							}
 						}
 					}
 				}
@@ -15896,20 +15912,22 @@ class PlayState extends MusicBeatState
 					{
 						iconP1.changeIcon(boyfriend.healthIcon);
 						reloadHealthBarColors();
-						if (PublicVariables.luigiDayOutNoteChange == true){
-							PublicVariables.luigiDayOutNoteChange = false;
-							for(note in playerStrums.members){
-								note.updateNoteSkin('Mario_NOTE_assets');
-							}
-							notes.forEachAlive(function(note:Note){
-								if(note.botplaySkin){
-									if (note.mustPress){
-										note.reloadNote('', 'Mario_NOTE_assets');
-									}else{
-										note.reloadNote('', 'Mario_NOTE_assets');
-									}
+						if (cpuControlled == false){
+							if (PublicVariables.luigiDayOutNoteChange == true){
+								PublicVariables.luigiDayOutNoteChange = false;
+								for(note in playerStrums.members){
+									note.updateNoteSkin('Mario_NOTE_assets');
 								}
-							});
+								notes.forEachAlive(function(note:Note){
+									if(note.botplaySkin){
+										if (note.mustPress){
+											note.reloadNote('', 'Mario_NOTE_assets');
+										}else{
+											note.reloadNote('', 'Mario_NOTE_assets');
+										}
+									}
+								});
+							}
 						}
 					}
 				}
@@ -16037,27 +16055,29 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function spawnNoteSplashOnNote2(note:Note)
+	function spawnNoteSplashOnNote2(note:Note, disableNoteSplash:Bool)
 	{
-		if (ClientPrefs.noteSplashes2 && note != null)
-		{
-			var strum:StrumNote = opponentStrums.members[note.noteData];
-			if (strum != null)
-			{
-				if (curStage == 'somari')
+		if (!disableNoteSplash){
+			if (ClientPrefs.noteSplashes2 && note != null)
 				{
-					spawnNoteSplash(strum.x + 155, strum.y + 170, note.noteData, note);
-				}
-				else
-				{
-					if ((PublicVariables.luigiChars.contains(SONG.player2) || cpuControlled) 
-						&& !PublicVariables.downt.contains(note.noteType)){
-						luigiSpawnNoteSplash(strum.x, strum.y, note.noteData, note);
-					}else{
-						spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+					var strum:StrumNote = opponentStrums.members[note.noteData];
+					if (strum != null)
+					{
+						if (curStage == 'somari')
+						{
+							spawnNoteSplash(strum.x + 155, strum.y + 170, note.noteData, note);
+						}
+						else
+						{
+							if ((PublicVariables.luigiChars.contains(SONG.player2) || cpuControlled) 
+								&& !PublicVariables.downt.contains(note.noteType)){
+								luigiSpawnNoteSplash(strum.x, strum.y, note.noteData, note);
+							}else{
+								spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+							}
+						}
 					}
 				}
-			}
 		}
 	}
 
@@ -16084,26 +16104,26 @@ class PlayState extends MusicBeatState
 	}
 
 	public function luigiSpawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
+	{
+		var skin:String = 'luigiSplashes';
+		if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
+			skin = PlayState.SONG.splashSkin;
+	
+		var hue:Float = ClientPrefs.arrowHSV[data % 4][0] / 360;
+		var sat:Float = ClientPrefs.arrowHSV[data % 4][1] / 100;
+		var brt:Float = ClientPrefs.arrowHSV[data % 4][2] / 100;
+		if (note != null)
 		{
-			var skin:String = 'luigiSplashes';
-			if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
-				skin = PlayState.SONG.splashSkin;
-	
-			var hue:Float = ClientPrefs.arrowHSV[data % 4][0] / 360;
-			var sat:Float = ClientPrefs.arrowHSV[data % 4][1] / 100;
-			var brt:Float = ClientPrefs.arrowHSV[data % 4][2] / 100;
-			if (note != null)
-			{
-				skin = note.noteSplashTexture;
-				hue = note.noteSplashHue;
-				sat = note.noteSplashSat;
-				brt = note.noteSplashBrt;
-			}
-	
-			var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-			splash.setupNoteSplash(x, y, data, 'luigiSplashes', hue, sat, brt);
-			grpNoteSplashes.add(splash);
+			skin = note.noteSplashTexture;
+			hue = note.noteSplashHue;
+			sat = note.noteSplashSat;
+			brt = note.noteSplashBrt;
 		}
+	
+		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+		splash.setupNoteSplash(x, y, data, 'luigiSplashes', hue, sat, brt);
+		grpNoteSplashes.add(splash);
+	}
 
 	public static function onWinClose()
 	{
