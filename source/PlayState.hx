@@ -818,13 +818,15 @@ class PlayState extends MusicBeatState
 	{
 		instance = this;
 
-		if ((noMiddlescrollStages.contains(curStage) 
+		PublicVariables.luigiDayOutNoteChange = false;
+
+		/*if ((noMiddlescrollStages.contains(curStage) 
 			|| curStage == 'somari' || curStage == 'piracy')){
 			if (ClientPrefs.middleScroll){
 				disabledMiddlescroll = true;
 				ClientPrefs.middleScroll = false;
 			}
-		}
+		}*/
 
 		if (curStage == 'nesbeat'){
 			SONG.speed = 2.9;
@@ -5340,7 +5342,7 @@ class PlayState extends MusicBeatState
 		luigiLogo.updateHitbox();
 		luigiLogo.screenCenter(X);
 		// luigiLogo.x += 10;
-		luigiLogo.y = timeBarBG.y + ((!hasDownScroll ? 500 : -90));
+		luigiLogo.y = ((!hasDownScroll ? 550 : -90));
 		luigiLogo.visible = cpuControlled;
 		add(luigiLogo);
 		if (curStage == 'virtual' || curStage == 'landstage' || curStage == 'somari'){
@@ -6810,6 +6812,15 @@ class PlayState extends MusicBeatState
 					if (PublicVariables.luigiChars.contains(SONG.player1) && gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType))
 						swagNote.texture = "Luigi_NOTE_assets";
 
+					if(swagNote.botplaySkin && PublicVariables.luigiDayOutNoteChange == true 
+						&& !isPixelStage && !PublicVariables.downt.contains(swagNote.noteType)){
+						if (gottaHitNote){
+							swagNote.texture = "Luigi_NOTE_assets";
+						}else{
+							swagNote.texture = "Mario_NOTE_assets";
+						}
+					}
+
 					var susLength:Float = swagNote.sustainLength;
 
 					susLength = susLength / Conductor.stepCrochet;
@@ -6834,6 +6845,15 @@ class PlayState extends MusicBeatState
 
 							if (PublicVariables.luigiChars.contains(SONG.player1) && gottaHitNote && !isPixelStage && !PublicVariables.downt.contains(sustainNote.noteType))
 								sustainNote.texture = "Luigi_NOTE_assets";
+
+							if(sustainNote.botplaySkin && PublicVariables.luigiDayOutNoteChange == true 
+								&& !isPixelStage && !PublicVariables.downt.contains(sustainNote.noteType)){
+								if (gottaHitNote){
+									sustainNote.texture = "Luigi_NOTE_assets";
+								}else{
+									sustainNote.texture = "Mario_NOTE_assets";
+								}
+							}
 
 							unspawnNotes.push(sustainNote);
 							if (sustainNote.mustPress)
@@ -7640,6 +7660,22 @@ class PlayState extends MusicBeatState
 				if (ratingString != "?"){
 					scoreTxt.text += ((Math.floor(ratingPercent * 10000) / 100));
 					scoreTxt.text += "%";
+				}
+				if (songMisses <= 0 && ratingString != "?"){
+					scoreTxt.text += ' ';
+					scoreTxt.text += '[';
+					scoreTxt.text += ratingAcc;
+					scoreTxt.text += ']';
+				}
+			}else if (curStage == 'piracy'){
+				scoreTxt.text = 'Score: ' + songScore;
+				scoreTxt.text += ' | Miss: ' + songMisses;
+				if (ratingString != "?"){
+					scoreTxt.text += ' ';
+					scoreTxt.text += '(';
+					scoreTxt.text += Math.floor(ratingPercent * 100);
+					scoreTxt.text += "%";
+					scoreTxt.text += ')';
 				}
 				if (songMisses <= 0 && ratingString != "?"){
 					scoreTxt.text += ' ';
@@ -8822,7 +8858,7 @@ class PlayState extends MusicBeatState
 						//}
 					}
 
-					if (!daNote.isSustainNote && PlayState.SONG.song != 'Day Out'){
+					if (!daNote.isSustainNote && !PublicVariables.noNoteSplasheSongs.contains(PlayState.SONG.song)){
 						spawnNoteSplashOnNote2(daNote);
 					}
 
@@ -15828,6 +15864,21 @@ class PlayState extends MusicBeatState
 					{
 						iconP1.changeIcon(gf.healthIcon);
 						reloadHealthBarColors();
+						if (PublicVariables.luigiDayOutNoteChange == false){
+							PublicVariables.luigiDayOutNoteChange = true;
+							for(note in playerStrums.members){
+								note.updateNoteSkin('Luigi_NOTE_assets');
+							}
+							notes.forEachAlive(function(note:Note){
+								if(note.botplaySkin){
+									if (note.mustPress){
+										note.reloadNote('', 'Luigi_NOTE_assets');
+									}else{
+										note.reloadNote('', 'Mario_NOTE_assets');
+									}
+								}
+							});
+						}
 					}
 				}
 				else if (note.noteType == 'GF Duet')
@@ -15845,6 +15896,21 @@ class PlayState extends MusicBeatState
 					{
 						iconP1.changeIcon(boyfriend.healthIcon);
 						reloadHealthBarColors();
+						if (PublicVariables.luigiDayOutNoteChange == true){
+							PublicVariables.luigiDayOutNoteChange = false;
+							for(note in playerStrums.members){
+								note.updateNoteSkin('Mario_NOTE_assets');
+							}
+							notes.forEachAlive(function(note:Note){
+								if(note.botplaySkin){
+									if (note.mustPress){
+										note.reloadNote('', 'Mario_NOTE_assets');
+									}else{
+										note.reloadNote('', 'Mario_NOTE_assets');
+									}
+								}
+							});
+						}
 					}
 				}
 
@@ -15959,7 +16025,9 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					if (PublicVariables.luigiChars.contains(SONG.player1)){
+					if ((PublicVariables.luigiChars.contains(SONG.player1)|| cpuControlled 
+						|| PublicVariables.luigiDayOutNoteChange) 
+						&& !PublicVariables.downt.contains(note.noteType)){
 						luigiSpawnNoteSplash(strum.x, strum.y, note.noteData, note);
 					}else{
 						spawnNoteSplash(strum.x, strum.y, note.noteData, note);
@@ -15982,7 +16050,8 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					if (PublicVariables.luigiChars.contains(SONG.player2)){
+					if ((PublicVariables.luigiChars.contains(SONG.player2) || cpuControlled) 
+						&& !PublicVariables.downt.contains(note.noteType)){
 						luigiSpawnNoteSplash(strum.x, strum.y, note.noteData, note);
 					}else{
 						spawnNoteSplash(strum.x, strum.y, note.noteData, note);

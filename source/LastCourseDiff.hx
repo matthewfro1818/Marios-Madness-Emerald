@@ -34,7 +34,7 @@ import flash.system.System;
 
 class LastCourseDiff extends MusicBeatSubstate
 {
-	var options:Array<String> = ['Normal', 'Borja'];
+	var options:Array<String> = ['Normal', 'B-Sides'];
 	private var grpOptions:FlxTypedGroup<FlxText>;
 
 	private static var curSelected:Int = 0;
@@ -126,7 +126,7 @@ class LastCourseDiff extends MusicBeatSubstate
 					PlayState.campaignMisses = 0;
 					PlayState.isStoryMode = false;
 					LoadingState.loadAndSwitchState(new PlayState());
-				case 'Borja':
+				case 'B-Sides':
 					PlayState.SONG = Song.loadFromJson("last-course-borja", "last-course");
 					PauseSubState.tengo = "last-course";
 					PlayState.campaignScore = 0;

@@ -543,12 +543,38 @@ class Modcharts {
                     
             }
         }else{
-            modManager.setValue("transformX", -320, 0);
-            modManager.setValue("transform0X", -20, 1);
-            modManager.setValue("transform1X", -20, 1);
-            modManager.setValue("transform2X", 650, 1);
-            modManager.setValue("transform3X", 650, 1);
-            PlayState.songIsModcharted = false;
+            if (songName.toLowerCase() == 'no party' || songName.toLowerCase() ==  'no party old'){
+                var thex = -983;
+                modManager.setValue("alpha", 1, 1);
+                modManager.setValue("transform0X", thex        , 0);
+                modManager.setValue("transform1X", thex + 169.6 / 3.5, 0);
+                modManager.setValue("transform2X", thex + 339.3 / 3.5, 0);
+                modManager.setValue("transform3X", thex + 509   / 3.5, 0);
+                if(ClientPrefs.downScroll){
+                    modManager.setValue("transformY", -136, 0);
+                }else{
+                    modManager.setValue("transformY", -100, 0);
+                }
+            }else if (songName.toLowerCase() == 'mario sing and game rythm 9'){
+                modManager.setValue("transformX", -24, 0);
+                modManager.setValue("transformX", 76, 1);
+                if(ClientPrefs.downScroll) modManager.setValue("transformY", 40);
+                else modManager.setValue("transformY", -10);
+
+                if(ClientPrefs.middleScroll){
+                    modManager.setValue("opponentSwap", 0.45);
+                    modManager.setValue("alpha", 1, 1);
+                }
+
+                PlayState.songIsModcharted = false;
+            }else{
+                modManager.setValue("transformX", -320, 0);
+                modManager.setValue("transform0X", -20, 1);
+                modManager.setValue("transform1X", -20, 1);
+                modManager.setValue("transform2X", 650, 1);
+                modManager.setValue("transform3X", 650, 1);
+                PlayState.songIsModcharted = false;
+            }
         }
         trace('${songName} modchart loaded!');
     }

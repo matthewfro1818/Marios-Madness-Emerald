@@ -125,6 +125,12 @@ class StrumNote extends FlxSprite
 			this.frames = Paths.getSparrowAtlas('Luigi_NOTE_assets');
 		}else if (PublicVariables.luigiChars.contains(PlayState.SONG.player1) && player == 1){
 			this.frames = Paths.getSparrowAtlas('Luigi_NOTE_assets');
+		}else if (PublicVariables.luigiDayOutNoteChange == true){
+			if (player == 1){
+				this.frames = Paths.getSparrowAtlas('Luigi_NOTE_assets');	
+			}else if (player == 0){
+				this.frames = Paths.getSparrowAtlas('Mario_NOTE_assets');	
+			}
 		}else{
 			this.frames = Paths.getSparrowAtlas(skin);	
 		}

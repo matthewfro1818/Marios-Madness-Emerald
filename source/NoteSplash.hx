@@ -18,9 +18,6 @@ class NoteSplash extends FlxSprite
 		super(x, y);
 
 		var skin:String = 'noteSplashes';
-		if ((!disabledLuigiSplashStages.contains(PlayState.curStage)) && PlayState.cpuControlled){
-			skin = 'luigiSplashes';
-		}
 		if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
 			skin = PlayState.SONG.splashSkin;
 
@@ -52,11 +49,7 @@ class NoteSplash extends FlxSprite
 
 		if (texture == null)
 		{
-			if ((!disabledLuigiSplashStages.contains(PlayState.curStage)) && PlayState.cpuControlled){
-				texture = 'luigiSplashes';
-			}else{
-				texture = 'noteSplashes';
-			}
+			texture = 'noteSplashes';
 			if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
 				texture = PlayState.SONG.splashSkin;
 		}

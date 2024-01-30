@@ -424,6 +424,82 @@ class PauseSubState extends MusicBeatSubstate
 			changeSelection(1);
 		}
 
+		if (controls.BACK){
+			if (!ClientPrefs.pauseStart)
+				{
+					if(PlayState.curStage == 'directstream'){
+						for (tween in tweensSC)
+							{
+								tween.cancel();
+							}
+						PlayState.ytbutton.animation.play('play');
+						PlayState.ytbutton.scale.set(0.8, 0.8);
+						PlayState.ytbutton.alpha = 0.8;
+						tweensSC.push(FlxTween.tween(PlayState.ytbutton.scale, {y: 1, x: 1}, 0.3));
+						tweensSC.push(FlxTween.tween(PlayState.ytbutton, {alpha: 0}, 0.3));
+
+						tweensSC.push(FlxTween.tween(PlayState.ytUI, {alpha: 0}, 0.2));
+						}
+			
+					close();
+				}
+				else
+				{
+					selected = true;
+					var countText:FlxText = new FlxText(FlxG.width, FlxG.height, 0, "3", 32);
+					countText.setFormat(Paths.font('vcr.ttf'), 72, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+					countText.borderSize = 1.25;
+					countText.visible = false;
+					countText.screenCenter();
+					add(countText);
+					if (PlayState.SONG.song == "Paranoia")
+					{
+						countText.color = FlxColor.RED;
+					}
+
+					hideall();
+					tweens.push(FlxTween.tween(descAll, {alpha: 0}, 0.4, {ease: FlxEase.quartOut}));
+					tweens.push(FlxTween.tween(bg, {alpha: 0}, 1.6, {ease: FlxEase.quartOut}));
+
+					new FlxTimer().start((1 * (1 / (Conductor.bpm / 60))), function(tmr:FlxTimer)
+					{
+						countText.visible = true;
+						countText.text = "3";
+						FlxG.sound.play(Paths.sound('Metronome_Tick'));
+					});
+					new FlxTimer().start((2 * (1 / (Conductor.bpm / 60))), function(tmr:FlxTimer)
+					{
+						countText.visible = true;
+						countText.text = "2";
+						FlxG.sound.play(Paths.sound('Metronome_Tick'));
+					});
+					new FlxTimer().start((3 * (1 / (Conductor.bpm / 60))), function(tmr:FlxTimer)
+					{
+						countText.visible = true;
+						countText.text = "1";
+						FlxG.sound.play(Paths.sound('Metronome_Tick'));
+					});
+
+					new FlxTimer().start((4 * (1 / (Conductor.bpm / 60))), function(tmr:FlxTimer)
+					{
+						if(PlayState.curStage == 'directstream'){
+							for (tween in tweensSC)
+								{
+									tween.cancel();
+								}
+						PlayState.ytbutton.animation.play('play');
+						PlayState.ytbutton.scale.set(0.8, 0.8);
+						PlayState.ytbutton.alpha = 0.8;
+						tweensSC.push(FlxTween.tween(PlayState.ytbutton.scale, {y: 1, x: 1}, 0.3));
+						tweensSC.push(FlxTween.tween(PlayState.ytbutton, {alpha: 0}, 0.3));
+
+						tweensSC.push(FlxTween.tween(PlayState.ytUI, {alpha: 0}, 0.2));
+						}
+						close();
+					});
+				}
+		}
+
 		if (accepted && !selected)
 		{
 			var daSelected:String = menuItems[curSelected];
