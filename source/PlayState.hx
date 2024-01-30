@@ -14970,7 +14970,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public var ratingIndexArray:Array<String> = ["sick", "good", "bad", "shit"];
-	public var returnArray:Array<String> = ["MFC", "SFC", "GFC", "FC"];
+	public var returnArray:Array<String> = ["SFC", "GFC", "FC", "FC"];
 	public var ratingIndexArray2:Array<String> = ["sick", "good", "bad", "shit"];
 	public var returnArray2:Array<String> = ["Sick!!", "Good!", "Bad", "Shit"];
 	public var smallestRating:String;
