@@ -216,12 +216,13 @@ class PauseSubState extends MusicBeatSubstate
 		blueballedTxt.updateHitbox();
 		// add(blueballedTxt);
 
-		botplayText = new FlxText(20, FlxG.height - 40, 0, "BOTPLAY", 32);
+		botplayText = new FlxText(20, FlxG.height - 40, 0, "LUIGI CALLED", 32);
 		botplayText.scrollFactor.set();
 		botplayText.setFormat(Paths.font('vcr.ttf'), 32);
 		botplayText.x = FlxG.width - (botplayText.width + 20);
 		botplayText.updateHitbox();
 		botplayText.visible = FlxG.save.data.luigiMode;
+		botplayText.x -= 150;
 		add(botplayText);
 
 		blueballedTxt.alpha = 0;
