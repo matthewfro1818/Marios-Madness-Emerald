@@ -130,6 +130,11 @@ class Note extends FlxSprite
 					hitCausesMiss = true;
 					botplaySkin = false;
 
+				case 'GF Sing':
+					if (PlayState.SONG.song == 'Day Out'){
+						reloadNote('', 'Luigi_NOTE_assets');
+					}
+
 				case 'Nota veneno':
 					ignoreNote = mustPress;
 					reloadNote('poison');

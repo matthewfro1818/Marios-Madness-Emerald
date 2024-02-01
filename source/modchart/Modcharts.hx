@@ -30,7 +30,10 @@ class Modcharts {
             switch (songName.toLowerCase()){
                 case 'all-stars':
                     modManager.queueSet(1072, "transformX", -320, 0);
-                    modManager.queueSet(1072, "transformX", 315, 1);
+                    modManager.queueSet(1072, "transform0X", -20, 1);
+                    modManager.queueSet(1072, "transform1X", -20, 1);
+                    modManager.queueSet(1072, "transform2X", 650, 1);
+                    modManager.queueSet(1072, "transform3X", 650, 1);
                     /*if (!ClientPrefs.middleScroll){
                         modManager.queueSet(1072, "alpha", 0.35, 1);
                     }*/

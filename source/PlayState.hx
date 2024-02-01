@@ -91,6 +91,19 @@ class PlayState extends MusicBeatState
 		['S+', 1], // From 90% to 99%
 		['SS+', 1] // The value on this one isn't used actually, since Perfect is always "1"
 	];
+
+	public static var ratingStuff2:Array<Dynamic> = [
+		['You Suck!', 0.2], //From 0% to 19%
+		['Shit', 0.4], //From 20% to 39%
+		['Bad', 0.5], //From 40% to 49%
+		['Bruh', 0.6], //From 50% to 59%
+		['Meh', 0.69], //From 60% to 68%
+		['Nice', 0.7], //69%
+		['Good', 0.8], //From 70% to 79%
+		['Great', 0.9], //From 80% to 89%
+		['Sick!', 1], //From 90% to 99%
+		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+	];
 		
 
 	#if (haxe >= "4.0.0")
@@ -396,6 +409,7 @@ class PlayState extends MusicBeatState
 	public var songMisses:Int = 0;
 	public var ghostMisses:Int = 0;
 	public var scoreTxt:FlxText;
+	public var rankingTxt:FlxText;
 	public var ratingTxt:FlxText;
 	public var subTitle:FlxText;
 	public var stream:Int = 0;
@@ -406,6 +420,7 @@ class PlayState extends MusicBeatState
 	var timeTxt:FlxText;
 	var worldText:FlxText;
 	var scoreTxtTween:FlxTween;
+	var rankingTxtTween:FlxTween;
 	var ihyLava:FlxSprite;
 	var lavaTween:FlxTween;
 	var startbf:FlxSprite;
@@ -833,6 +848,12 @@ class PlayState extends MusicBeatState
 			health = 2;
 		}else if (curStage == 'allfinal'){
 			SONG.speed = 3.2;
+		}else if (curStage == 'landstage'){
+			SONG.speed = 4;
+		}else if (curStage == 'virtual'){
+			SONG.speed = 3.7;
+		}else if (curStage == 'forest'){
+			SONG.speed = 4.2;
 		}else{
 			SONG.speed = 3.4;
 		}
@@ -5553,6 +5574,19 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
+			if (curStage != 'somari'){
+				rankingTxt = new FlxText(100, healthBarBG.y + 36, FlxG.width, "", 20);
+				rankingTxt.setFormat(Paths.font("mario2.ttf"), 15, gbcolor, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				rankingTxt.scrollFactor.set();
+				rankingTxt.borderSize = 1.25;
+				rankingTxt.visible = !ClientPrefs.hideHud;
+				rankingTxt.screenCenter(X);
+				rankingTxt.cameras = [camHUD];
+				rankingTxt.x -= 515;
+				rankingTxt.y -= 20;
+				add(rankingTxt);
+			}
+
 			scoreTxt = new FlxText(100, healthBarBG.y + 36, FlxG.width, "", 20);
 			scoreTxt.setFormat(Paths.font("mario2.ttf"), 15, gbcolor, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			scoreTxt.scrollFactor.set();
@@ -7352,8 +7386,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(curStage == 'nesbeat'){
-			countdown1 += 1;
-			countdown2 += 1;
+			countdown1 += 1; countdown2 += 1;
 			if (curStep == 4815 || curStep == 6096 || curStep == 0){
 				health = 2;
 			}
@@ -7693,12 +7726,6 @@ class PlayState extends MusicBeatState
 			}else{
 				scoreTxt.text = 'Score: ' + songScore;
 				scoreTxt.text += ' | Misses: ' + songMisses;
-				if (songMisses <= 0 && ratingString != "?"){
-					scoreTxt.text += ' ';
-					scoreTxt.text += '[';
-					scoreTxt.text += ratingAcc;
-					scoreTxt.text += ']';
-				}
 				if(curStage == 'nesbeat'){
 					scoreTxt.text += ' | Health: ';
 					scoreTxt.text += Math.round(health * 50);
@@ -7713,12 +7740,18 @@ class PlayState extends MusicBeatState
 						scoreTxt.text += "%";
 					}
 				}
-				if (ratingString != "?"){
+				if (songMisses <= 0 && ratingString != "?"){
+					scoreTxt.text += ' ';
+					scoreTxt.text += '[';
+					scoreTxt.text += ratingAcc;
+					scoreTxt.text += ']';
+				}
+				/*if (ratingString != "?"){
 					scoreTxt.text += ' [';
 					//scoreTxt.text += ratingAcc2;
 					scoreTxt.text += ratingString;
 					scoreTxt.text += ']';
-				}
+				}*/
 				/*scoreTxt.text = 'Score: ' + songScore;
 				scoreTxt.text += ' | Misses: ' + songMisses;
 				scoreTxt.text += ' | Rating: ' + ratingString;
@@ -7731,6 +7764,10 @@ class PlayState extends MusicBeatState
 				}*/
 			}
 		}
+
+		rankingTxt.text = 'Ranking: ' + ratingString;
+		rankingTxt.text += '\nRating: ' + ratingString2;
+
 		if(curStage == 'piracy'){
 			scoreTxt.text = scoreTxt.text.toUpperCase();
 			scoreTxt.text = scoreTxt.text.replace("      ", "  ");
@@ -7769,6 +7806,7 @@ class PlayState extends MusicBeatState
 					timeTxt.color = 0xFF25cd49;
 				}
 				scoreTxt.color = 0xFF25cd49;
+				rankingTxt.color = 0xFF25cd49;
 				customHBweegee.visible = true;	
 			}
 			else{
@@ -7781,8 +7819,10 @@ class PlayState extends MusicBeatState
 				}
 				if (curStage == 'virtual'){
 					scoreTxt.color = 0xFF1900FF;
+					rankingTxt.color = 0xFF1900FF;
 				}else{
 					scoreTxt.color = 0xFFF42626;
+					rankingTxt.color = 0xFFF42626;
 				}
 				customHBweegee.visible = false;
 			}
@@ -8174,22 +8214,20 @@ class PlayState extends MusicBeatState
 					if(curTime < 0) curTime = 0;
 					songPercent = (curTime / songLength);
 
-					var songCalc:Float = (songLength - curTime);
-					songCalc = curTime;
-
+					var songCalc:Float = (songLength - curTime); songCalc = curTime; 
 					var songCalc2:Float = (songLength - curTime);
 
-					var secondsTotal:Int = Math.floor(songCalc / 1000);
-					if(secondsTotal < 0) secondsTotal = 0;
-					var secondsTotal2:Int = Math.floor(songCalc2 / 1000);
-					if(secondsTotal2 < 0) secondsTotal2 = 0;
+					var secondsTotal:Int = Math.floor(songCalc / 1000); if(secondsTotal < 0) secondsTotal = 0; 
+					var secondsTotal2:Int = Math.floor(songCalc2 / 1000); if(secondsTotal2 < 0) secondsTotal2 = 0;
 
 					if (curStage == 'hatebg' || curStage == 'forest'){
 						timeTxt.text = "" + secondsTotal2;
 					}else{
-						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false) 
-						+ " / " + FlxStringUtil.formatTime(Math.floor(songLength / 1000), false) 
-						+ " / " + FlxStringUtil.formatTime(secondsTotal2, false);
+						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+						timeTxt.text += " / ";
+						timeTxt.text += FlxStringUtil.formatTime(Math.floor(songLength / 1000), false);
+						timeTxt.text += " / ";
+						timeTxt.text += FlxStringUtil.formatTime(secondsTotal2, false);
 					}
 				}
 			}
@@ -15072,14 +15110,24 @@ class PlayState extends MusicBeatState
 			{
 				scoreTxtTween.cancel();
 			}
+			if (rankingTxtTween != null)
+			{
+				rankingTxtTween.cancel();
+			}
 			if (curStage != 'somari' && curStage != 'endstage' && curStage != 'piracy' && (curStage != 'warioworld' || PlayState.SONG.song == 'Apparition Old'))
 			{
-				scoreTxt.scale.x = 1.1;
-				scoreTxt.scale.y = 1.1;
+				scoreTxt.scale.x = 1.1; rankingTxt.scale.x = 1.1;
+				scoreTxt.scale.y = 1.1; rankingTxt.scale.y = 1.1;
 				scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
 					onComplete: function(twn:FlxTween)
 					{
 						scoreTxtTween = null;
+					}
+				}); 
+				rankingTxtTween = FlxTween.tween(rankingTxt.scale, {x: 1, y: 1}, 0.2, {
+					onComplete: function(twn:FlxTween)
+					{
+						rankingTxtTween = null;
 					}
 				});
 			}
@@ -15877,15 +15925,6 @@ class PlayState extends MusicBeatState
 								for(note in playerStrums.members){
 									note.updateNoteSkin('Luigi_NOTE_assets');
 								}
-								notes.forEachAlive(function(note:Note){
-									if(note.botplaySkin){
-										if (note.mustPress){
-											note.reloadNote('', 'Luigi_NOTE_assets');
-										}else{
-											note.reloadNote('', 'Mario_NOTE_assets');
-										}
-									}
-								});
 							}
 						}
 					}
@@ -15911,15 +15950,6 @@ class PlayState extends MusicBeatState
 								for(note in playerStrums.members){
 									note.updateNoteSkin('Mario_NOTE_assets');
 								}
-								notes.forEachAlive(function(note:Note){
-									if(note.botplaySkin){
-										if (note.mustPress){
-											note.reloadNote('', 'Mario_NOTE_assets');
-										}else{
-											note.reloadNote('', 'Mario_NOTE_assets');
-										}
-									}
-								});
 							}
 						}
 					}
@@ -17194,6 +17224,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public var ratingString:String;
+	public var ratingString2:String;
 	public var ratingPercent:Float;
 	public var ratingAcc:String;
 	public var ratingAcc2:String = "N/A";
@@ -17418,11 +17449,13 @@ class PlayState extends MusicBeatState
 			if (Math.isNaN(ratingPercent))
 			{
 				ratingString = '?';
+				ratingString2 = '?';
 			}
 			else if (ratingPercent >= 1)
 			{
 				ratingPercent = 1;
 				ratingString = ratingStuff[ratingStuff.length - 1][0]; // Uses last string
+				ratingString2 = ratingStuff2[ratingStuff2.length - 1][0]; // Uses last string
 			}
 			else
 			{
@@ -17434,10 +17467,19 @@ class PlayState extends MusicBeatState
 						break;
 					}
 				}
+				for (i in 0...ratingStuff2.length - 1)
+				{
+					if (ratingPercent < ratingStuff2[i][1])
+					{
+						ratingString2 = ratingStuff2[i][0];
+						break;
+					}
+				}
 			}
 
 			setOnLuas('rating', ratingPercent);
 			setOnLuas('ratingName', ratingString);
+			setOnLuas('ratingName2', ratingString2);
 		}
 	}
 
