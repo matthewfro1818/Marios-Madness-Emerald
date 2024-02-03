@@ -55,7 +55,7 @@ class Song
 	{
 		var rawJson = null;
 
-		var formattedFolder:String = 'songData/' + Paths.formatToSongPath(folder);
+		var formattedFolder:String = 'songData/Charts/' + Paths.formatToSongPath(folder);
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
 		#if MODS_ALLOWED
 		var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
@@ -99,6 +99,9 @@ class Song
 		var songJson:SwagSong = parseJSONshit(rawJson);
 		if (jsonInput != 'events')
 			StageData.loadDirectory(songJson);
+
+		trace(formattedFolder + '/' + formattedSong);
+
 		return songJson;
 	}
 

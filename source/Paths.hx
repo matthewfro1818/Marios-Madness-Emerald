@@ -219,10 +219,11 @@ class Paths
 	inline static public function voices(song:String):Any
 	{
 		#if html5
-		return 'songs:assets/songs/${formatToSongPath(song)}/Voices.$SOUND_EXT';
+		return 'data:assets/data/songData/Audio/${formatToSongPath(song)}/Voices.$SOUND_EXT';
 		#else
 		var songKey:String = '${formatToSongPath(song)}/Voices';
-		var voices = returnSound('songs', songKey);
+		var voices = returnSound('data/songData/Audio/', songKey);
+		trace('data/songData/Audio/' + songKey);
 		return voices;
 		#end
 	}
@@ -230,10 +231,11 @@ class Paths
 	inline static public function inst(song:String):Any
 	{
 		#if html5
-		return 'songs:assets/songs/${formatToSongPath(song)}/Inst.$SOUND_EXT';
+		return 'data:assets/data/songData/Audio/${formatToSongPath(song)}/Inst.$SOUND_EXT';
 		#else
 		var songKey:String = '${formatToSongPath(song)}/Inst';
-		var inst = returnSound('songs', songKey);
+		var inst = returnSound('data/songData/Audio/', songKey);
+		trace('data/songData/Audio/' + songKey);
 		return inst;
 		#end
 	}
@@ -391,7 +393,7 @@ class Paths
 		#else
 		{
 			var folder:String = '';
-			if(path == 'songs') folder = 'songs:';
+			if(path == 'data') folder = 'data:';
 
 			currentTrackedSounds.set(gottenPath, OpenFlAssets.getSound(folder + getPath('$path/$key.$SOUND_EXT', SOUND, library)));
 		}

@@ -131,7 +131,7 @@ class Note extends FlxSprite
 					botplaySkin = false;
 
 				case 'GF Sing':
-					if (PlayState.SONG.song == 'Day Out'){
+					if (PlayState.SONG.player3 == 'luigi-ldo'){
 						reloadNote('', 'Luigi_NOTE_assets');
 					}
 

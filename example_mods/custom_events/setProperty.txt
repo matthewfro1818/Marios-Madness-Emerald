@@ -1,1 +1,0 @@
-setProperty(value1, value2)

@@ -311,7 +311,8 @@ class CustomFreeplayState extends MusicBeatSubstate
 
 			case 'Extra':
 				canciones = [
-					['Unbeatable', 'unbeatable', '14']
+					['Unbeatable', 'unbeatable', '14'],
+					['Piracy Is No Party', 'piracy-is-no-party', '0']
 				];				
 		}
 		openSubState(new FreeplaySubState());

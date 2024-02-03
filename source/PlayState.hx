@@ -76,6 +76,8 @@ class PlayState extends MusicBeatState
 {
 	public var modManager:ModManager;
 
+	var lastRating:String = "Sick!!";
+
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -320;
 
@@ -843,32 +845,7 @@ class PlayState extends MusicBeatState
 			}
 		}*/
 
-		if (curStage == 'nesbeat'){
-			SONG.speed = 2.9;
-			health = 2;
-		}else if (curStage == 'allfinal'){
-			SONG.speed = 3.2;
-		}else if (curStage == 'landstage'){
-			SONG.speed = 4;
-		}else if (curStage == 'virtual'){
-			SONG.speed = 3.7;
-		}else if (curStage == 'forest'){
-			SONG.speed = 4.2;
-		}else{
-			SONG.speed = 3.4;
-		}
-
 		cpuControlled = FlxG.save.data.luigiMode;
-
-		trace('Botplay Values: ' + FlxG.save.data.luigiMode + "," + cpuControlled);
-		if (FlxG.save.data.luigiMode == true && cpuControlled == true){
-			trace('Botplay Successfully Enabled');
-		}else if (FlxG.save.data.luigiMode == true && cpuControlled == false
-			|| FlxG.save.data.luigiMode == false && cpuControlled == true){
-			trace('Botplay Failed To Enable');
-		}else if (FlxG.save.data.luigiMode == false && cpuControlled == false){
-			trace('Botplay Successfully Disabled');
-		}
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -5450,6 +5427,9 @@ class PlayState extends MusicBeatState
 			case 'No Party':
 				autor = 'Kenny L';
 
+			case 'Piracy Is No Party':
+				autor = 'Kenny L And Juno Songs';
+
 			// Old Songs
 			case 'Forbidden Star':
 				autor = 'KINGF0X';
@@ -5574,7 +5554,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			if (curStage != 'somari'){
+			if (curStage != 'somari' && curStage != 'endstage' && curStage != 'piracy' && (curStage != 'warioworld' && (PlayState.SONG.song != 'Apparition Old' && PlayState.SONG.song != 'Forbidden Star'))){
 				rankingTxt = new FlxText(100, healthBarBG.y + 36, FlxG.width, "", 20);
 				rankingTxt.setFormat(Paths.font("mario2.ttf"), 15, gbcolor, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 				rankingTxt.scrollFactor.set();
@@ -5582,8 +5562,18 @@ class PlayState extends MusicBeatState
 				rankingTxt.visible = !ClientPrefs.hideHud;
 				rankingTxt.screenCenter(X);
 				rankingTxt.cameras = [camHUD];
-				rankingTxt.x -= 515;
-				rankingTxt.y -= 20;
+				//rankingTxt.y = timeBarBG.y;
+				/*if (ClientPrefs.downScroll){
+					rankingTxt.y += -90;
+				}else{
+					rankingTxt.y += 60;
+				}
+				if (ClientPrefs.middleScroll){
+					rankingTxt.x -= 300;
+				}*/
+				rankingTxt.x -= 470;
+				rankingTxt.y = 500;
+				rankingTxt.text = '';
 				add(rankingTxt);
 			}
 
@@ -5988,7 +5978,92 @@ class PlayState extends MusicBeatState
 
 		callOnLuas('onCreatePost', []);
 
+		trace('Botplay Values: ' + FlxG.save.data.luigiMode + "," + cpuControlled);
+		if (FlxG.save.data.luigiMode == true && cpuControlled == true){
+			trace('Botplay Successfully Enabled!');
+		}else if (FlxG.save.data.luigiMode == true && cpuControlled == false
+			|| FlxG.save.data.luigiMode == false && cpuControlled == true){
+			trace('Botplay Failed To Enable!');
+		}else if (FlxG.save.data.luigiMode == false && cpuControlled == false){
+			trace('Botplay Successfully Disabled!');
+		}
+
+		setScrollSpeed();
+
 		super.create();
+	}
+
+	var currentSongScrollSpeed:Float;
+
+	function setScrollSpeed(){
+		if (curStage == 'nesbeat'){
+			currentSongScrollSpeed = 2.9;
+			health = 2;
+		}else if (curStage == 'allfinal'){
+			currentSongScrollSpeed = 3.2;
+		}else if (curStage == 'landstage'){
+			currentSongScrollSpeed = 4;
+		}else if (curStage == 'virtual'){
+			currentSongScrollSpeed = 3.7;
+		}else if (curStage == 'forest'){
+			currentSongScrollSpeed = 4;
+		}else if (curStage == 'luigiout'){
+			currentSongScrollSpeed = 3;
+		}else if (curStage == 'exeport'){
+			currentSongScrollSpeed = 3.7;
+		}else if (curStage == 'demiseport'){
+			currentSongScrollSpeed = 3.7;
+		}else if (curStage == 'racing'){
+			currentSongScrollSpeed = 3.8;
+		}else if (curStage == 'hatebg'){
+			currentSongScrollSpeed = 3.3;
+		}else if (curStage == 'realbg'){
+			currentSongScrollSpeed = 3;
+		}else if (curStage == 'directstream'){
+			currentSongScrollSpeed = 2.8;
+		}else if (curStage == 'betamansion'){
+			currentSongScrollSpeed = 3;
+		}else if (curStage == 'endstage'){
+			currentSongScrollSpeed = 3.2;
+		}else if (curStage == 'piracy'){
+			if(SONG.song.toLowerCase() == 'piracy is no party'){
+				currentSongScrollSpeed = 3.7;
+			}else{
+				currentSongScrollSpeed = 3.4;
+			}
+		}else if (curStage == 'execlassic'){
+			currentSongScrollSpeed = 3.6;
+		}else if (curStage == 'execlassicold'){
+			currentSongScrollSpeed = 3.6;
+		}else if (curStage == 'exesequel'){
+			currentSongScrollSpeed = 3.6;
+		}else if (curStage == 'castlestar'){
+			currentSongScrollSpeed = 4;
+		}else if (curStage == 'bootleg'){
+			currentSongScrollSpeed = 3.4;
+		}else if (curStage == 'somari'){
+			currentSongScrollSpeed = 3.4;
+		}else if (curStage == 'secretbg'){
+			currentSongScrollSpeed = 3.6;
+		}else if (curStage == 'wetworld'){
+			currentSongScrollSpeed = 3.6;
+		}else if (curStage == 'warioworld'){
+			currentSongScrollSpeed = 3;
+		}else if (curStage == 'turmoilsweep'){
+			currentSongScrollSpeed = 3.3;
+		}else if (curStage == 'superbad'){
+			currentSongScrollSpeed = 3.4;
+		}else if (curStage == 'promoshow'){
+			currentSongScrollSpeed = 3.7;
+		}else if (curStage == 'meatworld'){
+			currentSongScrollSpeed = 3.7;
+		}
+		SONG.speed = currentSongScrollSpeed;
+		trace("Stage: " + curStage);
+		trace("Scroll Speed: " + currentSongScrollSpeed + " / " + SONG.speed);
+		trace("Scroll Speed Set!");
+		callOnLuas('setScrollSpeed', []);
+		callOnLuas('songScrollSpeed', [currentSongScrollSpeed]);
 	}
 
 	public function lofiTweensToBeCreepyTo(sprite:FlxSprite):Void
@@ -7764,9 +7839,6 @@ class PlayState extends MusicBeatState
 				}*/
 			}
 		}
-
-		rankingTxt.text = 'Ranking: ' + ratingString;
-		rankingTxt.text += '\nRating: ' + ratingString2;
 
 		if(curStage == 'piracy'){
 			scoreTxt.text = scoreTxt.text.toUpperCase();
@@ -10780,7 +10852,7 @@ class PlayState extends MusicBeatState
 							}
 						}
 				}
-			case 'Triggers No Party':
+			case 'Triggers No Party' | 'Triggers Piracy Is No Party':
 				var triggerP:Float = Std.parseFloat(value1);
 				if (Math.isNaN(triggerP)) triggerP = 0;
 				switch (triggerP)
@@ -15006,6 +15078,33 @@ class PlayState extends MusicBeatState
 	public var returnArray2:Array<String> = ["Sick!!", "Good!", "Bad", "Shit"];
 	public var smallestRating:String;
 
+	function updateRanking(ranking1:String, ranking2:String, lastRanking:String){
+		if (curStage != 'somari' && curStage != 'endstage' && curStage != 'piracy' && (curStage != 'warioworld' && (PlayState.SONG.song != 'Apparition Old' && PlayState.SONG.song != 'Forbidden Star'))){
+			if (ratingString != "?"){
+				rankingTxt.text = '' + ranking1;
+				rankingTxt.text += '\n' + ranking2;
+				rankingTxt.text += '\n' + combo;
+				rankingTxt.text += '\n' + lastRanking;
+			}else{
+				rankingTxt.text = '' + ratingString;
+			}
+			if (curStage != 'somari' && curStage != 'endstage' && curStage != 'piracy' && (curStage != 'warioworld' || PlayState.SONG.song == 'Apparition Old')){
+				rankingTxt.scale.x = 1.1;
+				rankingTxt.scale.y = 1.1;
+				if (rankingTxtTween != null)
+					{
+						rankingTxtTween.cancel();
+					}
+					rankingTxtTween = FlxTween.tween(rankingTxt.scale, {x: 1, y: 1}, 0.2, {
+						onComplete: function(twn:FlxTween)
+						{
+							rankingTxtTween = null;
+						}
+					});
+			}
+		}
+	}
+
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + 8);
@@ -15037,20 +15136,27 @@ class PlayState extends MusicBeatState
 			if (noteDiff > Conductor.safeZoneOffset * 0.75)
 				{
 					daRating = 'shit';
+					lastRating = 'Shit!!';
 					score = 50;
 				}
 				else if (noteDiff > Conductor.safeZoneOffset * 0.5)
 				{
 					daRating = 'bad';
+					lastRating = 'Bad!';
 					score = 100;
 				}
 				else if (noteDiff > Conductor.safeZoneOffset * 0.25)
 				{
 					daRating = 'good';
+					lastRating = 'Good!';
 					score = 200;
+				}
+				if (daRating == 'sick'){
+					lastRating = 'Sick!!';
 				}
 		}else if (cpuControlled){
 			daRating = 'sick';
+			lastRating = 'Sick!!';
 			score = 350;
 		}
 
@@ -15106,30 +15212,21 @@ class PlayState extends MusicBeatState
 			songScore += score;
 			songHits++;
 			RecalculateRating();
+			updateRanking(ratingString, ratingString2, lastRating);
 			if (scoreTxtTween != null)
 			{
 				scoreTxtTween.cancel();
 			}
-			if (rankingTxtTween != null)
-			{
-				rankingTxtTween.cancel();
-			}
 			if (curStage != 'somari' && curStage != 'endstage' && curStage != 'piracy' && (curStage != 'warioworld' || PlayState.SONG.song == 'Apparition Old'))
 			{
-				scoreTxt.scale.x = 1.1; rankingTxt.scale.x = 1.1;
-				scoreTxt.scale.y = 1.1; rankingTxt.scale.y = 1.1;
+				scoreTxt.scale.x = 1.1;
+				scoreTxt.scale.y = 1.1;
 				scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
 					onComplete: function(twn:FlxTween)
 					{
 						scoreTxtTween = null;
 					}
 				}); 
-				rankingTxtTween = FlxTween.tween(rankingTxt.scale, {x: 1, y: 1}, 0.2, {
-					onComplete: function(twn:FlxTween)
-					{
-						rankingTxtTween = null;
-					}
-				});
 			}
 			else
 			{
@@ -15219,9 +15316,6 @@ class PlayState extends MusicBeatState
 		comboSpr.visible = !ClientPrefs.hideHud;
 
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
-		if (curStage != 'allfinal'){
-			add(rating);
-		}
 
 		if (curStage == "somari")
 		{
@@ -15292,10 +15386,6 @@ class PlayState extends MusicBeatState
 			if (curStage == 'virtual')
 			{
 				numScore.color = 0xFFFF0000;
-			}
-
-			if (curStage != 'allfinal'){
-				add(numScore);
 			}
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
@@ -15498,6 +15588,8 @@ class PlayState extends MusicBeatState
 			}
 		});
 
+		songScore -= 350;
+
 		songMisses++;
 		if(nomiss){
 			health = 0;
@@ -15507,9 +15599,13 @@ class PlayState extends MusicBeatState
 		if(curStage != 'somari'){
 			health -= daNote.missHealth; // For testing purposes
 		}
+
+		combo = 0;
+
 		// trace(daNote.missHealth);
 		vocals.volume = 1;
 		RecalculateRating();
+		updateRanking(ratingString, ratingString2, "MISS!!");
 
 		var animToPlay:String = '';
 		switch (Math.abs(daNote.noteData) % 4)
@@ -15639,32 +15735,7 @@ class PlayState extends MusicBeatState
 		{
 			if(!nodamage){
 			health -= 0.04;
-			if (combo > 5 && gf.animOffsets.exists('sad'))
-			{
-				if (gf.curCharacter == 'eeveefriend')
-				{
-					gf.playAnim('sad' + FlxG.random.int(1, 4));
-				}
-				else{
-					if (curStage == 'exesequel' || curStage == 'betamansion' || curStage == 'nesbeat'){
-						starmanGF.animation.play('sad');
-					}
-				}
-			}
-			combo = 0;
-
-			if (!practiceMode)
-				songScore -= 10;
-			if (!endingSong)
-			{
-				if (ghostMiss)
-					ghostMisses++;
-				songMisses++;
-				if(nomiss){
-					health = 0;
-				}
-			}
-			RecalculateRating();
+	
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);

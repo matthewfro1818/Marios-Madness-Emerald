@@ -167,7 +167,7 @@ class Modcharts {
                     }
     
                     PlayState.songIsModcharted = false;
-                case 'no party' | 'no party old':
+                case 'no party' | 'no party old' | 'piracy is no party':
                     var thex = -983;
                     modManager.setValue("alpha", 1, 1);
                     modManager.setValue("transform0X", thex        , 0);
@@ -546,7 +546,7 @@ class Modcharts {
                     
             }
         }else{
-            if (songName.toLowerCase() == 'no party' || songName.toLowerCase() ==  'no party old'){
+            if (songName.toLowerCase() == 'no party' || songName.toLowerCase() ==  'no party old' || songName.toLowerCase() ==  'piracy is no party'){
                 var thex = -983;
                 modManager.setValue("alpha", 1, 1);
                 modManager.setValue("transform0X", thex        , 0);
