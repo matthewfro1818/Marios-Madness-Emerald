@@ -97,18 +97,22 @@ class StrumNote extends FlxSprite
 					animation.add('static', [0]);
 					animation.add('pressed', [8], 12, false);
 					animation.add('confirm', [12, 16], 24, false);
+					animation.add('confirm2', [16], 24, false);
 				case 1:
 					animation.add('static', [1]);
 					animation.add('pressed', [9], 12, false);
 					animation.add('confirm', [13, 17], 24, false);
+					animation.add('confirm2', [17], 24, false);
 				case 2:
 					animation.add('static', [2]);
 					animation.add('pressed', [10], 12, false);
 					animation.add('confirm', [14, 18], 12, false);
+					animation.add('confirm2', [18], 24, false);
 				case 3:
 					animation.add('static', [3]);
 					animation.add('pressed', [11], 12, false);
 					animation.add('confirm', [15, 19], 24, false);
+					animation.add('confirm2', [19], 24, false);
 			}
 		}
 		else
@@ -149,18 +153,22 @@ class StrumNote extends FlxSprite
 				this.animation.addByPrefix('static', 'arrowLEFT');
 				this.animation.addByPrefix('pressed', 'left press', 24, false);
 				this.animation.addByPrefix('confirm', 'left confirm', 24, false);
+				this.animation.addByPrefix('confirm2', 'left confirm0003', 24, false);
 			case 1:
 				this.animation.addByPrefix('static', 'arrowDOWN');
 				this.animation.addByPrefix('pressed', 'down press', 24, false);
 				this.animation.addByPrefix('confirm', 'down confirm', 24, false);
+				this.animation.addByPrefix('confirm2', 'down confirm0003', 24, false);
 			case 2:
 				this.animation.addByPrefix('static', 'arrowUP');
 				this.animation.addByPrefix('pressed', 'up press', 24, false);
 				this.animation.addByPrefix('confirm', 'up confirm', 24, false);
+				this.animation.addByPrefix('confirm2', 'up confirm0003', 24, false);
 			case 3:
 				this.animation.addByPrefix('static', 'arrowRIGHT');
 				this.animation.addByPrefix('pressed', 'right press', 24, false);
 				this.animation.addByPrefix('confirm', 'right confirm', 24, false);
+				this.animation.addByPrefix('confirm2', 'right confirm0003', 24, false);
 		}
 		updateHitbox();
 		playAnim('static');
@@ -211,6 +219,10 @@ class StrumNote extends FlxSprite
 			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
 
 			if (animation.curAnim.name == 'confirm' && !PlayState.isPixelStage)
+			{
+				updateConfirmOffset();
+			}
+			if (animation.curAnim.name == 'confirm2' && !PlayState.isPixelStage)
 			{
 				updateConfirmOffset();
 			}

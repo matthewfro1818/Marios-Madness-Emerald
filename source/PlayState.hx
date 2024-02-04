@@ -5571,8 +5571,8 @@ class PlayState extends MusicBeatState
 				if (ClientPrefs.middleScroll){
 					rankingTxt.x -= 300;
 				}*/
-				rankingTxt.x -= 470;
-				rankingTxt.y = 500;
+				rankingTxt.x -= 520;
+				rankingTxt.y = 600;
 				rankingTxt.text = '';
 				add(rankingTxt);
 			}
@@ -6006,9 +6006,9 @@ class PlayState extends MusicBeatState
 		}else if (curStage == 'virtual'){
 			currentSongScrollSpeed = 3.7;
 		}else if (curStage == 'forest'){
-			currentSongScrollSpeed = 4;
+			currentSongScrollSpeed = 4.2;
 		}else if (curStage == 'luigiout'){
-			currentSongScrollSpeed = 3;
+			currentSongScrollSpeed = 3.4;
 		}else if (curStage == 'exeport'){
 			currentSongScrollSpeed = 3.7;
 		}else if (curStage == 'demiseport'){
@@ -6016,13 +6016,13 @@ class PlayState extends MusicBeatState
 		}else if (curStage == 'racing'){
 			currentSongScrollSpeed = 3.8;
 		}else if (curStage == 'hatebg'){
-			currentSongScrollSpeed = 3.3;
+			currentSongScrollSpeed = 3.5;
 		}else if (curStage == 'realbg'){
 			currentSongScrollSpeed = 3;
 		}else if (curStage == 'directstream'){
 			currentSongScrollSpeed = 2.8;
 		}else if (curStage == 'betamansion'){
-			currentSongScrollSpeed = 3;
+			currentSongScrollSpeed = 3.2;
 		}else if (curStage == 'endstage'){
 			currentSongScrollSpeed = 3.2;
 		}else if (curStage == 'piracy'){
@@ -6032,23 +6032,23 @@ class PlayState extends MusicBeatState
 				currentSongScrollSpeed = 3.4;
 			}
 		}else if (curStage == 'execlassic'){
-			currentSongScrollSpeed = 3.6;
+			currentSongScrollSpeed = 3.8;
 		}else if (curStage == 'execlassicold'){
-			currentSongScrollSpeed = 3.6;
+			currentSongScrollSpeed = 3.8;
 		}else if (curStage == 'exesequel'){
-			currentSongScrollSpeed = 3.6;
+			currentSongScrollSpeed = 3.8;
 		}else if (curStage == 'castlestar'){
-			currentSongScrollSpeed = 4;
+			currentSongScrollSpeed = 4.2;
 		}else if (curStage == 'bootleg'){
 			currentSongScrollSpeed = 3.4;
 		}else if (curStage == 'somari'){
 			currentSongScrollSpeed = 3.4;
-		}else if (curStage == 'secretbg'){
+		}else if (curStage == 'secretbg'){   
 			currentSongScrollSpeed = 3.6;
 		}else if (curStage == 'wetworld'){
 			currentSongScrollSpeed = 3.6;
 		}else if (curStage == 'warioworld'){
-			currentSongScrollSpeed = 3;
+			currentSongScrollSpeed = 3.2;
 		}else if (curStage == 'turmoilsweep'){
 			currentSongScrollSpeed = 3.3;
 		}else if (curStage == 'superbad'){
@@ -6864,9 +6864,9 @@ class PlayState extends MusicBeatState
 		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
 
 		var songName:String = Paths.formatToSongPath(SONG.song);
-		var file:String = Paths.json('songData/' + songName + '/events');
+		var file:String = Paths.json('songData/Charts/' + songName + '/events');
 		#if sys
-		if (FileSystem.exists(Paths.modsJson('songData/' + songName + '/events')) || FileSystem.exists(file))
+		if (FileSystem.exists(Paths.modsJson('songData/Charts/' + songName + '/events')) || FileSystem.exists(file))
 		{
 		#else
 		if (OpenFlAssets.exists(file))
@@ -8955,7 +8955,11 @@ class PlayState extends MusicBeatState
 					{
 						time += 0.15;
 					}
-					StrumPlayAnim(true, Std.int(Math.abs(daNote.noteData)) % 4, time);
+					if (daNote.isSustainNote){
+						StrumPlayAnim2(true, Std.int(Math.abs(daNote.noteData)) % 4, time);
+					}else{
+						StrumPlayAnim(true, Std.int(Math.abs(daNote.noteData)) % 4, time);
+					}
 					daNote.hitByOpponent = true;
 
 					if (ClientPrefs.flashing){
@@ -15668,14 +15672,22 @@ class PlayState extends MusicBeatState
 			{
 				iconP1.changeIcon(gf.healthIcon);
 				reloadHealthBarColors();
+				if (cpuControlled == false){
+					if (PublicVariables.luigiDayOutNoteChange == false){
+						PublicVariables.luigiDayOutNoteChange = true;
+						for(daNote in playerStrums.members){
+							daNote.updateNoteSkin('Luigi_NOTE_assets');
+						}
+					}
+				}
 			}
 		}
-		if (daNote.noteType == 'GF Duet')
-			{
+		else if (daNote.noteType == 'GF Duet')
+		{
 				gf.playAnim(animToPlay, true);
 				boyfriend.playAnim(animToPlay, true);
 				GFSINGBF = false;
-			}
+		}
 		else
 		{
 			var daAlt = '';
@@ -15688,6 +15700,14 @@ class PlayState extends MusicBeatState
 			{
 				iconP1.changeIcon(boyfriend.healthIcon);
 				reloadHealthBarColors();
+				if (cpuControlled == false){
+					if (PublicVariables.luigiDayOutNoteChange == true){
+						PublicVariables.luigiDayOutNoteChange = false;
+						for(note in playerStrums.members){
+							note.updateNoteSkin('Mario_NOTE_assets');
+						}
+					}
+				}
 			}
 			if (daNote.noteType == 'Bad Poison')
 			{
@@ -16087,7 +16107,11 @@ class PlayState extends MusicBeatState
 				{
 					time = 0.05;
 				}
-				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % 4, time);
+				if (note.isSustainNote){
+					StrumPlayAnim2(false, Std.int(Math.abs(note.noteData)) % 4, time);
+				}else{
+					StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % 4, time);
+				}
 			}
 			else
 			{
@@ -16096,7 +16120,11 @@ class PlayState extends MusicBeatState
 				{
 					time += 0.15;
 				}
-				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % 4, time);
+				if (note.isSustainNote){
+					StrumPlayAnim2(false, Std.int(Math.abs(note.noteData)) % 4, time);
+				}else{
+					StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % 4, time);
+				}
 				/*playerStrums.forEach(function(spr:StrumNote)
 				{
 					if (Math.abs(note.noteData) == spr.ID)
@@ -16107,6 +16135,21 @@ class PlayState extends MusicBeatState
 					}
 				});*/
 			}
+
+			if (gf.curCharacter == 'luigi-ldo')
+			{
+				iconP2.changeIcon(dad.healthIcon);
+				reloadHealthBarColors();
+				if (cpuControlled == false){
+					if (PublicVariables.luigiDayOutNoteChange == true){
+						PublicVariables.luigiDayOutNoteChange = false;
+						for(note in playerStrums.members){
+							note.updateNoteSkin('Mario_NOTE_assets');
+						}
+					}
+				}
+			}
+
 			note.wasGoodHit = true;
 			vocals.volume = vocalvol;
 
@@ -17290,6 +17333,24 @@ class PlayState extends MusicBeatState
 		if (spr != null)
 		{
 			spr.playAnim('confirm', true);
+			spr.resetAnim = time;
+		}
+	}
+	function StrumPlayAnim2(isDad:Bool, id:Int, time:Float)
+	{
+		var spr:StrumNote = null;
+		if (isDad)
+		{
+			spr = strumLineNotes.members[id];
+		}
+		else
+		{
+			spr = playerStrums.members[id];
+		}
+		
+		if (spr != null)
+		{
+			spr.playAnim('confirm2', true);
 			spr.resetAnim = time;
 		}
 	}

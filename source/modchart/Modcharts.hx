@@ -570,6 +570,10 @@ class Modcharts {
                 }
 
                 PlayState.songIsModcharted = false;
+            }else if (songName.toLowerCase() == 'alone'){
+                modManager.setValue("alpha", 1, 0);
+                modManager.setValue("alpha", 0.3, 1);
+                modManager.setValue("drunk", 0.5, 0);
             }else{
                 modManager.setValue("transformX", -320, 0);
                 modManager.setValue("transform0X", -20, 1);

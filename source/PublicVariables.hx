@@ -22,7 +22,7 @@ class PublicVariables
   public static var noNoteSplasheSongs:Array<String> = [ // disable enemby notesplashes on these songs
     'Day Out', 'Unbeatable'
     ,'No Party', 'No Party Old'
-    ,'Piracy Is No Party'
+    ,'Piracy Is No Party', 'MARIO SING AND GAME RYTHM 9'
   ];
 
   public static var luigiDayOutNoteChange:Bool = false; // changes the notes and splashes to luigi notes and splashes when luigi sings in day out

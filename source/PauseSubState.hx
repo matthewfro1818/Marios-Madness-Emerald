@@ -152,12 +152,12 @@ class PauseSubState extends MusicBeatSubstate
 		if (muymalo > 1)
 		{
 			// trace('did desc ' + muymalo);
-			txtdesc = Paths.txt('songData/' + tengo + '/desc' + muymalo);
+			txtdesc = Paths.txt('songData/Charts/' + tengo + '/desc' + muymalo);
 		}
 		else
 		{
 			// trace('did regular desc, muymalo is ' + muymalo);
-			txtdesc = Paths.txt('songData/' + tengo + '/desc');
+			txtdesc = Paths.txt('songData/Charts/' + tengo + '/desc');
 		}
 		var muestralol:Array<String> = ['El pepe', 'ete sech'];
 
